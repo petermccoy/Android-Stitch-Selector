@@ -4,7 +4,8 @@ import kotlin.random.Random
 
 data class Item(val id: Long, val name: String)
 
-data class LogEntry(val stitch: String, val color: String, val timeMillis: Long)
+/** [count] is how many stitches to make; 0 for picks saved before counts existed. */
+data class LogEntry(val stitch: String, val color: String, val timeMillis: Long, val count: Int = 0)
 
 data class AppState(
     val projectName: String = DEFAULT_PROJECT_NAME,
@@ -26,6 +27,9 @@ data class AppState(
 
     companion object {
         const val DEFAULT_PROJECT_NAME = "Project1"
+
+        /** Range for the random number of stitches in each pick. */
+        val STITCH_COUNT_RANGE = 4..10
 
         val DEFAULT_STITCHES = listOf(
             "SC cross stitch",
@@ -76,9 +80,10 @@ data class AppState(
 object StitchLogic {
 
     /**
-     * Picks a random color (from all colors) and a random stitch from those not yet used this
-     * round. When every stitch has been used, all stitches go back into the available pool
-     * before picking. Returns the state unchanged if there are no colors or no stitches.
+     * Picks a random color (from all colors), a random stitch from those not yet used this
+     * round, and a random number of stitches (4-10). When every stitch has been used, all
+     * stitches go back into the available pool before picking. Returns the state unchanged if
+     * there are no colors or no stitches.
      */
     fun pick(state: AppState, random: Random = Random.Default, now: Long = System.currentTimeMillis()): AppState {
         if (state.colors.isEmpty() || state.stitches.isEmpty()) return state
@@ -92,9 +97,10 @@ object StitchLogic {
 
         val stitch = available.random(random)
         val color = state.colors.random(random)
+        val count = AppState.STITCH_COUNT_RANGE.random(random)
         return state.copy(
             usedStitchIds = used + stitch.id,
-            log = state.log + LogEntry(stitch.name, color.name, now),
+            log = state.log + LogEntry(stitch.name, color.name, now, count),
         )
     }
 

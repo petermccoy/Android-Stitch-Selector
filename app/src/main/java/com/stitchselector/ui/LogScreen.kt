@@ -53,7 +53,9 @@ fun LogScreen(state: AppState, modifier: Modifier = Modifier) {
                 ListItem(
                     overlineContent = { Text("#${index + 1} · ${dateFormat.format(Date(entry.timeMillis))}") },
                     headlineContent = { Text(entry.stitch) },
-                    supportingContent = { Text(entry.color) },
+                    supportingContent = {
+                        Text(if (entry.count > 0) "${entry.color} · ${entry.count} stitches" else entry.color)
+                    },
                 )
                 HorizontalDivider()
             }

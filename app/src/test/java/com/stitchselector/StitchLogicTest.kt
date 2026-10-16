@@ -31,6 +31,16 @@ class StitchLogicTest {
     }
 
     @Test
+    fun stitchCountIsBetweenFourAndTen() {
+        var state = AppState.defaults()
+        val random = Random(11)
+        repeat(500) { state = StitchLogic.pick(state, random) }
+
+        val counts = state.log.map { it.count }.toSet()
+        assertEquals((4..10).toSet(), counts)
+    }
+
+    @Test
     fun poolRefillsAfterAllStitchesUsed() {
         var state = AppState.defaults()
         val random = Random(7)

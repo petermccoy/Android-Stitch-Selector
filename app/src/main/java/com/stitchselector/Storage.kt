@@ -28,7 +28,10 @@ class Storage(context: Context) {
         put("usedStitchIds", JSONArray(state.usedStitchIds))
         put("log", JSONArray().apply {
             state.log.forEach {
-                put(JSONObject().put("stitch", it.stitch).put("color", it.color).put("time", it.timeMillis))
+                put(
+                    JSONObject().put("stitch", it.stitch).put("color", it.color)
+                        .put("time", it.timeMillis).put("count", it.count),
+                )
             }
         })
         put("nextId", state.nextId)
@@ -44,7 +47,7 @@ class Storage(context: Context) {
             usedStitchIds = List(used.length()) { used.getLong(it) },
             log = List(log.length()) {
                 val e = log.getJSONObject(it)
-                LogEntry(e.getString("stitch"), e.getString("color"), e.getLong("time"))
+                LogEntry(e.getString("stitch"), e.getString("color"), e.getLong("time"), e.optInt("count", 0))
             },
             nextId = o.getLong("nextId"),
         )
