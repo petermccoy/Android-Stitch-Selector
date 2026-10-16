@@ -3,7 +3,7 @@
 An Android app for a yarn stitching project. Each tap of **New Stitch** picks:
 
 - a **color** at random from all colors,
-- a **number of stitches** to make, from 4 to 10, and
+- a **number of rows** (4 to 10) to work that stitch and color for, and
 - a **stitch** at random from the stitches not yet chosen this round. Once every stitch has
   been chosen, they all go back into the available pool.
 

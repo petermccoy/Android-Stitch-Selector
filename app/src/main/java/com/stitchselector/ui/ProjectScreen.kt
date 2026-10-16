@@ -138,8 +138,8 @@ private fun CurrentPickCard(state: AppState) {
                 Spacer(Modifier.height(4.dp))
                 Text(current.stitch, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                 Text("in ${current.color}", style = MaterialTheme.typography.titleMedium)
-                if (current.count > 0) {
-                    Text("${current.count} stitches", style = MaterialTheme.typography.titleMedium)
+                if (current.rows > 0) {
+                    Text("for ${current.rows} rows", style = MaterialTheme.typography.titleMedium)
                 }
             }
             if (state.stitches.isNotEmpty()) {

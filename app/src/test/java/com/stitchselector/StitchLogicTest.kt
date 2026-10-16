@@ -31,12 +31,12 @@ class StitchLogicTest {
     }
 
     @Test
-    fun stitchCountIsBetweenFourAndTen() {
+    fun rowCountIsBetweenFourAndTen() {
         var state = AppState.defaults()
         val random = Random(11)
         repeat(500) { state = StitchLogic.pick(state, random) }
 
-        val counts = state.log.map { it.count }.toSet()
+        val counts = state.log.map { it.rows }.toSet()
         assertEquals((4..10).toSet(), counts)
     }
 
